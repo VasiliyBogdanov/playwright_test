@@ -1,7 +1,6 @@
 from playwright.sync_api import Page
 
 from framework.pages.MainPage import MainPage
-from framework.pages.page_elements.Services import API_GATEWAY_ADDR
 
 
 class TestAPIGatewayUI:
@@ -10,10 +9,12 @@ class TestAPIGatewayUI:
     def test_goto_APIGateway(self, page: Page):
         """Go to API Gateway page from main page through Services menu in the
          header"""
+        api_gw = "API Gateway"
 
-        mainpage = MainPage(page)
-        mainpage.header.services.click()
-        mainpage.header.services.sidebar_click("Инфраструктура")
-        mainpage.header.services.grid_elem_click("API Gateway")
+        main_page = MainPage(page)
+        main_page.header.services.click()
+        main_page.header.services.sidebar_click(title="Инфраструктура")
+        main_page.header.services.grid_elem_click(title=api_gw)
 
-        assert page.url == API_GATEWAY_ADDR
+        api_gw_url = main_page.header.services.grid_elems[api_gw]
+        assert main_page.page.url == api_gw_url

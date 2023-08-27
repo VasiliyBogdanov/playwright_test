@@ -2,12 +2,15 @@ import re
 
 from playwright.sync_api import Page
 
+from framework.Addresses import MAIN_ADDR, PATHS
 from .BaseElement import BaseElement
-
-API_GATEWAY_ADDR = "https://cloud.ru/ru/products/oblachnyj-api-gateway-hosting"
 
 
 class Services(BaseElement):
+    grid_elems = {
+        "API Gateway": "".join([MAIN_ADDR, PATHS["API Gateway"]])
+    }
+
     def __init__(self, page: Page):
         super().__init__(page)
 
@@ -23,4 +26,4 @@ class Services(BaseElement):
     def grid_elem_click(self, title: str):
         self.page.get_by_role("link", name=title) \
             .first.click()
-        self.page.wait_for_url(API_GATEWAY_ADDR)
+        self.page.wait_for_url(self.grid_elems[title])
