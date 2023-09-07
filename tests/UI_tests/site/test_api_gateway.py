@@ -16,5 +16,6 @@ class TestAPIGatewayUI:
         main_page.header.services.sidebar_click(title="Инфраструктура")
         main_page.header.services.grid_elem_click(title=api_gw)
 
-        api_gw_url = main_page.header.services.grid_elems[api_gw]
-        assert main_page.page.url == api_gw_url
+        api_gw_url = main_page.header.services.grid_elems.get(api_gw)
+        assert main_page.page.url == api_gw_url, \
+            f"Переход на страницу API Gateway по адресу {api_gw_url} не удался"
